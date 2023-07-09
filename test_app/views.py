@@ -10,17 +10,18 @@ from test_app.models import Building, Section, Expenditure
 
 def get_parent_sections(building_id: int) -> list[Section]:
     """
-        Получает список родительских секций для определенного объекта
-        строительства и вычисляет бюджет (стоимость всех расценок внутри) для
-        каждой родительской секции.
+    Получает список родительских секций для определенного объекта
+    строительства и вычисляет бюджет (стоимость всех расценок внутри) для
+    каждой родительской секции.
 
-        Аргументы:
-            building_id (int): Идентификатор объекта строительства.
+    Аргументы:
+        building_id (int): Идентификатор объекта строительства.
 
-        Возвращает:
-            list[Section]: Список родительских секций с вычисленным бюджетом.
-        """
-    parent_sections = Section.objects.filter(building_id=building_id, parent=None)
+    Возвращает:
+        list[Section]: Список родительских секций с вычисленным бюджетом.
+    """
+    parent_sections = Section.objects.filter(building_id=building_id,
+                                             parent=None)
 
     for section in parent_sections:
         budget = 0
@@ -95,7 +96,7 @@ def get_buildings() -> list[dict]:
 
 def update_with_discount(section_id: int, discount: Decimal):
     """
-        Обновляет поле price у всех расценок внутри секции с учетом скидки.
+    Обновляет поле price у всех расценок внутри секции с учетом скидки.
 
     Аргументы:
         section_id (int): Идентификатор секции, внутри которой нужно применить скидку.
