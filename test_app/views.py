@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.template.context_processors import request
+from decimal import Decimal
 
 from test_app.models import Building, Section, Expenditure
 
@@ -88,3 +87,20 @@ def get_buildings() -> list[dict]:
         result.append(building_data)
     return result
 
+
+## Задание 3
+# Пользователь хочет применить скидку для секции на стоимость всех расценок
+# внутри. Написать функцию, которая обновит поле price у всех расценок внутри
+# секции с учётом этой скидки.
+
+def update_with_discount(section_id: int, discount: Decimal):
+    """
+        @param discount: Размер скидки в процентах от Decimal(0) до Decimal(100)
+    """
+    section = Section.objects.get(id=section_id)
+    expenditures = Expenditure.objects.filter(section=section)
+    for expenditure in expenditures:
+        original_price = Expenditure.price
+        discount_price = original_price * (Decimal(1) - discount / Decimal(100))
+        expenditure.price = discount_price
+        expenditure.save()
