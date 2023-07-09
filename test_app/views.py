@@ -20,12 +20,6 @@ def get_parent_sections(building_id: int) -> list[Section]:
 
         Возвращает:
             list[Section]: Список родительских секций с вычисленным бюджетом.
-
-        Исключения:
-            N/A
-
-        Пример использования:
-            get_parent_sections(1)
         """
     parent_sections = Section.objects.filter(building_id=building_id, parent=None)
 
