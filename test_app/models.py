@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Building(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=255)
 
     class Meta:
         verbose_name = 'Объект строительства'
@@ -38,7 +38,7 @@ class Expenditure(models.Model):
                                 help_text='Расценка может принадлежать только '
                                           'той секции, у которой указан parent'
                                 )
-    name = models.CharField(verbose_name='Название расценки')
+    name = models.CharField(verbose_name='Название расценки', max_length=255)
     type = models.CharField(verbose_name='Тип расценки',
                             choices=Types.choices, max_length=8)
     count = models.DecimalField(verbose_name='Кол-во', max_digits=20,
