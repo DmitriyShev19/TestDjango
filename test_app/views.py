@@ -95,7 +95,11 @@ def get_buildings() -> list[dict]:
 
 def update_with_discount(section_id: int, discount: Decimal):
     """
-        @param discount: Размер скидки в процентах от Decimal(0) до Decimal(100)
+        Обновляет поле price у всех расценок внутри секции с учетом скидки.
+
+    Аргументы:
+        section_id (int): Идентификатор секции, внутри которой нужно применить скидку.
+        discount (Decimal): Размер скидки в процентах от Decimal(0) до Decimal(100).
     """
     section = Section.objects.get(id=section_id)
     expenditures = Expenditure.objects.filter(section=section)
