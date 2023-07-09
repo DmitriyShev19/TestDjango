@@ -1,9 +1,12 @@
 from decimal import Decimal
 
+from django.shortcuts import render
+from django.template.context_processors import request
+
 from test_app.models import Building, Section, Expenditure
 
 
-## Задание 1.
+# # Задание 1.
 # Написать тело функции, которая для каждого конкретного объекта строительства
 # будет возвращать список только родительских секций. У каждой родительской
 # секции необходимо посчитать бюджет (стоимость всех расценок внутри).
@@ -104,8 +107,12 @@ def update_with_discount(section_id: int, discount: Decimal):
     """
     section = Section.objects.get(id=section_id)
     expenditures = Expenditure.objects.filter(section=section)
+    bulk_list = []
     for expenditure in expenditures:
-        original_price = Expenditure.price
-        discount_price = original_price * (Decimal(1) - discount / Decimal(100))
+        original_price = expenditure.price
+        discount_price = original_price * (
+                Decimal(1) - Decimal(discount) / Decimal(100)
+        )
         expenditure.price = discount_price
-        expenditure.save()
+        bulk_list.append(expenditure)
+    Expenditure.objects.bulk_update(bulk_list, ['price'])
