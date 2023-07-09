@@ -111,7 +111,7 @@ def update_with_discount(section_id: int, discount: Decimal):
     for expenditure in expenditures:
         original_price = expenditure.price
         discount_price = original_price * (
-                Decimal(1) - Decimal(discount) / Decimal(100)
+                Decimal(1) - discount / Decimal(100)
         )
         expenditure.price = discount_price
         bulk_list.append(expenditure)
